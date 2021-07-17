@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 
 // Router connectivity
 const { getRecipe, getRecipeByName } = require('./src/recipe/queries');
-const { queryResult } = require('pg-promise');
 const pool = require('./db');
 const { connect } = require('./src/recipe/routes');
 const queries = require('./src/recipe/queries');
@@ -18,7 +17,6 @@ const port = 2340;
 app.engine('hbs', handlebars({
   layoutsDir: __dirname + '/views/layouts',
   extname: 'hbs',
-  defaultLayout: 'main',
   partialsDir: __dirname + '/views/partials'
 }));
 app.set('view engine', 'hbs');
@@ -29,12 +27,18 @@ app.use(express.static(__dirname, +'/public'));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
 
-app.get('/', (req, res, next)=> {
+app.get('/', (req, res)=> {
   res.render('home');
-  next();
 });
 
-app.use('/recipes', dbroutes);
+app.get('/recipes', (req, res) => {
+  pool.query('SELECT * FROM recipe', (err, res) => {
+  console.log(err, res)
+  });
+  res.render('recipes', {recipe: res.rows});
+});
+
+app.use('/api/v1/recipes', dbroutes);
 
 app.listen(port, ()=> {
   console.log(`Connection established at http://localhost:${port}`)
