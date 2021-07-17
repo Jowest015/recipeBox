@@ -4,7 +4,7 @@ const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 
 // Router connectivity
-const { getRecipe, getRecipeById } = require('./src/recipe/queries');
+const { getRecipe, getRecipeByName } = require('./src/recipe/queries');
 const { queryResult } = require('pg-promise');
 const pool = require('./db');
 const { connect } = require('./src/recipe/routes');
