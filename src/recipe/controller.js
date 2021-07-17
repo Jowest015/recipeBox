@@ -8,9 +8,9 @@ const getRecipe = (req, res) => {
   });
 };
 
-const getRecipeById = (req, res) => {
-  const id = parseInt(req.params.id);
-  pool.query(queries.getRecipeById, [id], (error, results) => {
+const getRecipeByName = (req, res) => {
+  const { name } = req.body;
+  pool.query(queries.getRecipeByName, [name], (error, results) => {
     if (error) throw error;
     res.status(200).json(results.rows);
   });
@@ -67,7 +67,7 @@ const updateRecipe = (req, res) => {
 
 module.exports = {
   getRecipe,
-  getRecipeById,
+  getRecipeByName,
   addRecipe,
   deleteRecipe,
   updateRecipe,
