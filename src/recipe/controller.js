@@ -31,8 +31,44 @@ const addRecipe = (req, res) => {
   });
 };
 
+const deleteRecipe = (req, res) => {
+  const id = parseInt(req.params.id);
+
+  pool.query(queries.getRecipeById, [id], (error, results) => {
+    const recipeNotFound = !results.rows.length;
+    if (recipeNotFound) {
+    res.send("Recipe not here");
+    }
+
+    pool.query(queries.deleteRecipe, [id], (error, results) => {
+      if (error) throw error;
+      res.status(200).send("The recipe is no more, it has ceased to be...");
+    });
+  });
+};
+
+const updateRecipe = (req, res) => {
+  const id = parseInt(req.params.id);
+  const { name, ingredients, directions } = req.body;
+
+  pool.query(queries.getRecipeById, [id], (error, results) => {
+    const recipeNotFound = !results.rows.length;
+    if (recipeNotFound) {
+    res.send("Recipe not here");
+    }
+
+    pool.query(queries.updateRecipe, [name, id], (error, results) => {
+      if (error) throw error;
+      res.status(200).send("The recipe is...better!");
+    });
+  });
+};
+
+
 module.exports = {
   getRecipe,
   getRecipeById,
   addRecipe,
+  deleteRecipe,
+  updateRecipe,
 };

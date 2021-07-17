@@ -3,7 +3,7 @@ var express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
     es6Renderer = require('express-es6-template-engine');
-    // routes = require('./routes/');
+    routes = require('./routes/');
 
 var app = express();
 var PORT = 2430;
