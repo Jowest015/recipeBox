@@ -1,17 +1,19 @@
 const express = require('express');
-const dbroutes = require('./src/recipe/routes');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
+const pg = require('pg');
 
 // Router connectivity
-const { getRecipe, getRecipeByName } = require('./src/recipe/queries');
-const pool = require('./db');
-const { connect } = require('./src/recipe/routes');
-const queries = require('./src/recipe/queries');
-const { Client } = require('pg');
-
 const app = express();
-const port = 2340;
+const port = 3000;
+
+// Static file setup: connect CSS
+app.use(express.static(__dirname, +'/public'));
+
+// Setup parsing middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.json());
 
 // View engine setup
 app.engine('hbs', handlebars({
@@ -21,25 +23,6 @@ app.engine('hbs', handlebars({
 }));
 app.set('view engine', 'hbs');
 
-// Static file setup: connect CSS
-app.use(express.static(__dirname, +'/public'));
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.json());
-
-app.get('/', (req, res)=> {
-  res.render('home');
-});
-
-app.get('/recipes', (req, res, next) => {
-  pool.query(getRecipe, (err, res) => {
-  console.log(err, res)
-  });
-  res.render('recipes', { data: res });
-});
-
-app.use('/api/v1/recipes', dbroutes);
 
 app.listen(port, ()=> {
   console.log(`Connection established at http://localhost:${port}`)
