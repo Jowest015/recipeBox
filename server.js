@@ -24,18 +24,19 @@ app.set('view engine', 'hbs');
 // Static file setup: connect CSS
 app.use(express.static(__dirname, +'/public'));
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.json());
 
 app.get('/', (req, res)=> {
   res.render('home');
 });
 
-app.get('/recipes', (req, res) => {
-  pool.query('SELECT * FROM recipe', (err, res) => {
+app.get('/recipes', (req, res, next) => {
+  pool.query(getRecipe, (err, res) => {
   console.log(err, res)
   });
-  res.render('recipes', {recipe: res.rows});
+  res.render('recipes', { data: res });
 });
 
 app.use('/api/v1/recipes', dbroutes);
