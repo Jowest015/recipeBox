@@ -1,7 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
-const pg = require('pg');
+
 
 // Router connectivity
 const app = express();
@@ -23,6 +23,10 @@ app.engine('hbs', handlebars({
 }));
 app.set('view engine', 'hbs');
 
+
+
+const routes = require('./src/routes/routes');
+app.use(routes);
 
 app.listen(port, ()=> {
   console.log(`Connection established at http://localhost:${port}`)

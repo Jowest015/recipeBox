@@ -1,5 +1,18 @@
-<div class="row">
-  <div class="column">
-    <h2>Welcome!</h2>
-    <p>Please feel free to touch the recipes button on the header to see all the delicious recipes....not much else here so why not?</p>
-  </div>
+{{#if rows}}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Ingredients</th>
+            <th>Directions</th>
+        </tr>
+        {{#each res.rows}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{this.ingredients}}</td>
+            <td>{{this.directions}}</td>
+        </tr>
+        {{/each}}
+    </table>
+    {{else}}
+    <h3>No recipes to show.</h3>
+{{/if}}
