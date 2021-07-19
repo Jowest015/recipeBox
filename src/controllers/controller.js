@@ -22,7 +22,7 @@ exports.view = (req, res) => {
     client.query("SELECT * FROM recipedb", (err, rows) => {
 
       if(!err) {
-        res.render("home", { rows });
+        res.render("recipes", rows);
         done();
         
       } else {

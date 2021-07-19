@@ -1,0 +1,18 @@
+{{#if rows}}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Ingredients</th>
+            <th>Directions</th>
+        </tr>
+        {{#each rows}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{ingredients}}</td>
+            <td>{{directions}}</td>
+        </tr>
+        {{/each}}
+    </table>
+    {{else}}
+    <h3>No recipes to show.</h3>
+{{/if}}
