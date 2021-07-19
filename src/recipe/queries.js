@@ -1,4 +1,4 @@
-const getRecipe = "SELECT * FROM recipe";
+const getRecipe = "SELECT * FROM recipe WHERE id = 1";
 const getRecipeByName = "SELECT s FROM recipe s WHERE s.name = $1";
 const checkRecipeExists = "SELECT s FROM recipe s WHERE s.name = $1";
 const addRecipe = "INSERT INTO recipe (name, ingredients, directions) VALUES ($1, $2, $3)";
