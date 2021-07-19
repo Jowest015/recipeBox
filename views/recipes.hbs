@@ -1,18 +1,17 @@
-{{#if rows}}
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Ingredients</th>
-            <th>Directions</th>
-        </tr>
-        {{#each rows}}
-        <tr>
-            <td>{{name}}</td>
-            <td>{{ingredients}}</td>
-            <td>{{directions}}</td>
-        </tr>
-        {{/each}}
-    </table>
-    {{else}}
-    <h3>No recipes to show.</h3>
-{{/if}}
+  {{#each rows}}
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        {{name}}
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p>Ingredients: {{ingredients}} </p>
+        <p>Directions: {{directions}} </p>
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
